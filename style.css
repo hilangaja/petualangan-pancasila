@@ -1,0 +1,477 @@
+/* =============================================
+   LANGKAH PANCASILA — style.css
+   ============================================= */
+
+:root {
+    --red:     #e53935;
+    --blue:    #1565c0;
+    --blue-lt: #1e88e5;
+    --blue-xl: #e3f2fd;
+    --gold:    #f9a825;
+    --green:   #2e7d32;
+    --green-lt:#e8f5e9;
+    --bg:      #eef4fb;
+    --white:   #ffffff;
+    --text:    #0d2b4e;
+    --muted:   #607d8b;
+    --radius:  16px;
+    --shadow:  0 8px 32px rgba(21,101,192,0.13);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* ── HEADER ── */
+header {
+    background: linear-gradient(110deg, #b71c1c 0%, #c62828 30%, #1565c0 70%, #0d47a1 100%);
+    padding: 14px 28px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.22);
+    position: relative;
+    overflow: hidden;
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        -45deg,
+        rgba(255,255,255,0.03) 0px,
+        rgba(255,255,255,0.03) 2px,
+        transparent 2px,
+        transparent 12px
+    );
+    pointer-events: none;
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header-icon {
+    font-size: 2.2rem;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.75rem;
+    color: white;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+header p {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.82);
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    margin-top: 2px;
+}
+
+.header-badge {
+    margin-left: auto;
+    background: rgba(255,255,255,0.18);
+    border: 2px solid rgba(255,255,255,0.35);
+    border-radius: 50px;
+    padding: 7px 20px;
+    color: white;
+    font-weight: 800;
+    font-size: 1rem;
+    backdrop-filter: blur(6px);
+    letter-spacing: 0.3px;
+}
+
+/* ── LAYOUT ── */
+.container {
+    display: flex;
+    height: calc(100vh - 72px);
+    padding: 16px;
+    gap: 16px;
+}
+
+/* ── GAME AREA ── */
+.game-area {
+    flex: 0 0 55%;
+    display: flex;
+    flex-direction: column;
+}
+
+.maze-wrapper {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.maze-label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--blue);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    opacity: 0.7;
+}
+
+.maze {
+    position: relative;
+    flex: 1;
+    background: white;
+    border: 3px solid #90caf9;
+    border-radius: var(--radius);
+    background-image:
+        linear-gradient(#dbeafe 1px, transparent 1px),
+        linear-gradient(90deg, #dbeafe 1px, transparent 1px);
+    background-size: 70px 70px;
+    box-shadow: var(--shadow), inset 0 2px 10px rgba(21,101,192,0.04);
+    overflow: hidden;
+}
+
+/* subtle corner decorations */
+.maze::before, .maze::after {
+    content: '';
+    position: absolute;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(21,101,192,0.07) 0%, transparent 70%);
+}
+.maze::before { top: -10px; left: -10px; width: 80px; height: 80px; }
+.maze::after  { bottom: -10px; right: -10px; width: 80px; height: 80px; }
+
+#player {
+    position: absolute;
+    font-size: 36px;
+    left: 16px;
+    top: 16px;
+    transition: left 0.4s cubic-bezier(.34,1.56,.64,1),
+                top  0.4s cubic-bezier(.34,1.56,.64,1);
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.18));
+    z-index: 3;
+}
+
+.finish {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    font-size: 36px;
+    z-index: 3;
+    animation: bounce 1.6s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+}
+
+/* ── QUIZ AREA ── */
+.quiz-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
+}
+
+/* Progress row */
+.quiz-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.quiz-num {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--blue);
+    white-space: nowrap;
+    background: var(--blue-xl);
+    padding: 5px 14px;
+    border-radius: 50px;
+    border: 1.5px solid #90caf9;
+}
+
+.progress-wrap {
+    flex: 1;
+    background: #dbeafe;
+    border-radius: 20px;
+    height: 10px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #1565c0, #42a5f5, #81d4fa);
+    border-radius: 20px;
+    transition: width 0.5s ease;
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+}
+
+@keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Quiz Card */
+.quiz-card {
+    background: white;
+    border-radius: 20px;
+    padding: 26px 24px 22px;
+    box-shadow: var(--shadow);
+    border: 1.5px solid #dbeafe;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    animation: slideUp 0.35s ease;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.question-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(90deg, #1565c0, #1e88e5);
+    color: white;
+    font-size: 0.68rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 50px;
+    width: fit-content;
+}
+
+#question {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.25rem;
+    color: var(--text);
+    line-height: 1.5;
+    padding-bottom: 16px;
+    border-bottom: 2px dashed #dbeafe;
+    flex-shrink: 0;
+}
+
+/* Answer buttons */
+.answer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    flex: 1;
+    align-content: start;
+}
+
+.answer-grid button {
+    padding: 14px 10px;
+    border: 2px solid #bbdefb;
+    border-radius: 14px;
+    background: #f0f7ff;
+    color: #1565c0;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    text-align: center;
+    line-height: 1.35;
+    position: relative;
+    overflow: hidden;
+}
+
+.answer-grid button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.answer-grid button:hover {
+    background: var(--blue);
+    color: white;
+    border-color: #1565c0;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 22px rgba(21,101,192,0.28);
+}
+
+.answer-grid button:active {
+    transform: translateY(-1px) scale(1.01);
+}
+
+.answer-grid button.correct {
+    background: var(--green-lt);
+    border-color: #43a047;
+    color: var(--green);
+    animation: popIn 0.3s ease;
+    pointer-events: none;
+}
+
+.answer-grid button.wrong {
+    background: #ffebee;
+    border-color: #e53935;
+    color: #c62828;
+    animation: shake 0.35s ease;
+    pointer-events: none;
+}
+
+@keyframes popIn {
+    0%   { transform: scale(0.95); }
+    60%  { transform: scale(1.06); }
+    100% { transform: scale(1); }
+}
+
+@keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25%     { transform: translateX(-6px); }
+    75%     { transform: translateX(6px); }
+}
+
+/* Info row */
+.info-row {
+    display: flex;
+    gap: 10px;
+}
+
+.timer-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #fff8e1, #fff3cd);
+    border: 2px solid #ffe082;
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #bf360c;
+}
+
+.timer-box strong {
+    font-size: 1.05rem;
+    font-family: 'Fredoka One', cursive;
+}
+
+.timer-icon { font-size: 1.1rem; }
+
+.status-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3e5f5;
+    border: 2px solid #ce93d8;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #6a1b9a;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.status-box.correct-status {
+    background: var(--green-lt);
+    border-color: #66bb6a;
+    color: var(--green);
+}
+
+.status-box.wrong-status {
+    background: #ffebee;
+    border-color: #ef9a9a;
+    color: #c62828;
+}
+
+/* ── WINNER MODAL ── */
+.winner {
+    position: fixed;
+    inset: 0;
+    background: rgba(13,43,78,0.6);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.winner-inner {
+    background: white;
+    padding: 44px 40px;
+    border-radius: 24px;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+    text-align: center;
+    max-width: 380px;
+    width: 90%;
+    border-top: 6px solid var(--gold);
+    animation: popIn 0.4s ease;
+}
+
+.winner-emoji {
+    font-size: 4rem;
+    margin-bottom: 12px;
+    animation: bounce 1s ease infinite;
+}
+
+.winner-inner h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.2rem;
+    color: var(--text);
+    margin-bottom: 16px;
+}
+
+.result-details {
+    background: var(--blue-xl);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--blue);
+    line-height: 1.9;
+    border: 1.5px solid #90caf9;
+}
+
+.btn-restart {
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #1565c0, #1e88e5);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    box-shadow: 0 6px 18px rgba(21,101,192,0.3);
+    letter-spacing: 0.3px;
+}
+
+.btn-restart:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(21,101,192,0.4);
+}
+
+.hidden { display: none !important; }
